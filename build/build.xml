@@ -1,0 +1,25 @@
+<project xmlns:if="ant:if" xmlns:unless="ant:unless" name="smart-blog" basedir=".">
+  <condition property="mvn.cmd" value="${basedir}\mvnw.cmd" else="${basedir}\mvnw">
+    <os family="windows" />
+  </condition>
+
+  <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+  <condition property="os" value="win" else="mac">
+    <os family="windows" />
+  </condition>
+
+  <condition property="mvn.cmd" value="${basedir}\mvnw.cmd" else="${basedir}\mvnw">
+    <os family="windows" />
+  </condition>
+
+  <property name="maven.test.skip" value="true" />
+
+  <target name="install">
+
+    <exec executable="mvnw" failonerror="true">
+      <arg line="install -Dmavan.test.skip=true" />
+    </exec>
+  </target>
+
+</project>

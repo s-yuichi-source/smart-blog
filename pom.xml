@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.blog</groupId>
+  <artifactId>smart-blog</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <dependencyManagement>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-to-slf4j</artifactId>
+      <version>2.17.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-dependencies</artifactId>
+      <version>${spring.boot.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencyManagement>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+
+    <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+    <!-- <flyway.version>7.3.1</flyway.version> -->
+
+    <ant.target>install</ant.target>
+    <antfile>build/build.xml</antfile>
+
+    <db.jdbc.groupId>org.postgresql</db.jdbc.groupId>
+    <db.jdbc.artifactId>postgresql</db.jdbc.artifactId>
+    <db.jdbc.version>42.2.18</db.jdbc.version>
+    <db.jdbc.driver>org.postgresql.Driver</db.jdbc.driver>
+    <db.jdbc.url>jdbc:postgresql://${db.host}:${db.host.port}/${db.name}?currentSchema=${db.schema}</db.jdbc.url>
+
+    <db.host>localhost</db.host>
+    <db.host.port>5555</db.host.port>
+    <db.container.port>5432</db.container.port>
+    <db.name>postgres</db.name>
+    <db.username>smart</db.username>
+    <db.password>Wu4dUEDc</db.password>
+    <db.schema>smart-blog</db.schema>
+  
+  </properties>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>.env</include>
+        </includes>
+        <targetPath>${project.basedir}</targetPath>
+      </resource>
+    </resources>
+
+    <defaultGoal>antrun:run</defaultGoal>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <inherited>false</inherited>
+        <configuration>
+          <target>
+            <ant antfile="${antfile}" target="${ant.target}" />
+          </target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.8</version>
+          <inherited>false</inherited>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.ant</groupId>
+              <artifactId>ant</artifactId>
+              <version>1.10.9</version>
+            </dependency>
+            <dependency>
+              <groupId>ant-contrib</groupId>
+              <artifactId>ant-contrib</artifactId>
+              <version>1.0b3</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M5</version>
+        </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>0.31.0</version>
+          <configuration>
+            <images>
+              <image>
+                <name>${docker.img.name}</name>
+                <build>
+                  <from>amazoncorretto:17</from>
+                  <assembly>
+                    <descriptorRef>artifact</descriptorRef>
+                  </assembly>
+                  <cmd>java -XX:MaxRAMPercentage=75 -jar \
+                    maven/${project.name}-${project.version}.jar</cmd>
+                  <env>
+                    <SPRING_DATASOURCE_URL>jdbc:postgresql://host.docker.internal:${db.host.port}/${db.name}?currentSchema=${db.schema}</SPRING_DATASOURCE_URL>
+                  </env>
+                </build>
+              </image>
+            </images>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+  </build>
+
+
+</project>

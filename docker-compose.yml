@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  dbms:
+    image: postgres:12.9
+    environment:
+      TZ: ${OS_TIMEZONE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}
+
+  web:
+    image: nginx:1.21.0-alpine
+    ports:
+      - ${WEB_PORT}:80
+    volumes:
+      - ${WEB_MOUNT_DIR}:/usr/share/nginx/html
