@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  dbms:
+    ports:
+      - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}
+
+  web:
+    ports:
+      - ${WEB_PORT}:80
+
+  smtp:
+    ports:
+      - ${MAILHOG_SMTP_PORT}:1025
+      - ${MAILHOG_WEB_PORT}:8025

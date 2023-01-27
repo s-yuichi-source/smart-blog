@@ -9,9 +9,18 @@ services:
     ports:
       - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}
 
+  wait:
+    image: jwilder/dockerize
+    environment:
+      TZ: ${OS_TIMEZONE}
+    command: tail -f /dev/null
   web:
     image: nginx:1.21.0-alpine
     ports:
       - ${WEB_PORT}:80
     volumes:
       - ${WEB_MOUNT_DIR}:/usr/share/nginx/html
+  smtp:
+    image: mailhog/mailhog:v1.0.1
+    environment:
+      TZ: ${OS_TIMEZONE}

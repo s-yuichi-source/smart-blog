@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch SmartBlogManagerBackApp",
+            "request": "launch",
+            "mainClass": "com.blog.SmartBlogManagerBackApp",
+            "projectName": "smart-blog-manager-back"
+        },
+        {
+            "type": "java",
+            "name": "Launch SmartBlogGuestBackApp",
+            "request": "launch",
+            "mainClass": "com.blog.SmartBlogGuestBackApp",
+            "projectName": "smart-blog-guest-back"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SmartBlogguestBackApp<smart-blog-guest-back>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.blog.SmartBlogguestBackApp",
+            "projectName": "smart-blog-guest-back",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

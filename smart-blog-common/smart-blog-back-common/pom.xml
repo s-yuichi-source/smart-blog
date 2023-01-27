@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>smart-blog-back-common</artifactId>
+
+    <parent>
+        <groupId>com.blog</groupId>
+        <artifactId>smart-blog</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../../</relativePath>
+    </parent>
+
+    <properties>
+        <spring.boot.version>2.7.0</spring.boot.version>
+        <parent.web.mount.dir>${project.parent.basedir}/target/web/</parent.web.mount.dir>
+        <!-- Individual placeholders are prefixed by flyway.placeholders. -->
+        <flyway.schemas>public</flyway.schemas>
+        <flyway.placeholders.commonColumns>created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, created_by CHAR(36) NOT NULL DEFAULT 'system', updated_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_by CHAR(36) NOT NULL DEFAULT 'system', version bigint NOT NULL DEFAULT 0</flyway.placeholders.commonColumns>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>${db.jdbc.groupId}</groupId>
+            <artifactId>${db.jdbc.artifactId}</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency> -->
+
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+        </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>2.17.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>kms</artifactId>
+            <version>2.16.50</version>
+        </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>sts</artifactId>
+            <version>2.16.50</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>9.1.4</version>
+                    <configuration>
+                        <cleanDisabled>false</cleanDisabled>
+                        <url>jdbc:postgresql://localhost:5555/postgres</url>
+                        <user>smart</user>
+                        <password>Wu4dUEDc</password>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+  
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
+
+</project>

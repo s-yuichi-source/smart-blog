@@ -8,27 +8,29 @@
   <packaging>pom</packaging>
 
   <dependencyManagement>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-to-slf4j</artifactId>
-      <version>2.17.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-dependencies</artifactId>
-      <version>${spring.boot.version}</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-to-slf4j</artifactId>
+        <version>2.17.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
   </dependencyManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
 
-    <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
-    <!-- <flyway.version>7.3.1</flyway.version> -->
+    <spring.boot.version>2.7.0</spring.boot.version>
+    <flyway.version>7.3.1</flyway.version>
 
     <ant.target>install</ant.target>
     <antfile>build/build.xml</antfile>
@@ -45,12 +47,12 @@
     <db.name>postgres</db.name>
     <db.username>smart</db.username>
     <db.password>Wu4dUEDc</db.password>
-    <db.schema>smart-blog</db.schema>
+    <db.schema>public</db.schema>
   
   </properties>
 
   <build>
-    <resources>
+    <!-- <resources>
       <resource>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
@@ -59,7 +61,7 @@
         </includes>
         <targetPath>${project.basedir}</targetPath>
       </resource>
-    </resources>
+    </resources> -->
 
     <defaultGoal>antrun:run</defaultGoal>
 
@@ -143,6 +145,12 @@
     </pluginManagement>
 
   </build>
+
+  <modules>
+    <module>smart-blog-common/smart-blog-back-common</module>
+    <module>smart-blog-guest/smart-blog-guest-back</module>
+    <module>smart-blog-manager/smart-blog-manager-back</module>
+  </modules>
 
 
 </project>
