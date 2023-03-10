@@ -43,7 +43,7 @@ public class PostsEntity {
   @Column(name = "updated_date")
   private Timestamp updatedDate;
 
-  @Column(name = "update_by")
+  @Column(name = "updated_by")
   private String updateBy;
 
   @Column(name = "version")
