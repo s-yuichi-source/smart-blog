@@ -1,0 +1,5 @@
+target
+.project
+/.env
+.DS_Store
+.classpath
